@@ -23,13 +23,28 @@ public class ExampleExpansion extends PlaceholderExpansion {
 
 	@Override
 	public String getVersion() {
-		return "1.0.0";
+		return "1.0.1";
 	}
 
 	@Override
 	public String onPlaceholderRequest(Player p, String arg) {
+		
 		if (arg.equals("test")) {
 			return "success";
+		}
+		
+		//lets do some stuff with a player
+		if (p == null) {
+			return "player is null";
+		}
+		
+		switch (arg) {
+		case "name":
+			return p.getName();
+		case "displayname":
+			return p.getDisplayName();
+		case "gamemode":
+			return p.getGameMode().name();
 		}
 		return null;
 	}
