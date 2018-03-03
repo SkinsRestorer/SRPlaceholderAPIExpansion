@@ -1,14 +1,28 @@
 package com.extendedclip.papiexpansion.example;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import me.clip.deluxetags.DeluxeTags;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 
 public class ExampleExpansion extends PlaceholderExpansion {
 
+	private DeluxeTags plugin;
+	
+	@Override
+	public boolean canRegister() {
+		if (Bukkit.getPluginManager().getPlugin(getPlugin()) == null) {
+			return false;
+		}
+		
+		plugin = (DeluxeTags) Bukkit.getPluginManager().getPlugin(getPlugin());
+		return plugin != null;
+	}
+	
 	@Override
 	public String getAuthor() {
-		return "clip";
+		return "everyone";
 	}
 
 	@Override
@@ -18,12 +32,12 @@ public class ExampleExpansion extends PlaceholderExpansion {
 
 	@Override
 	public String getPlugin() {
-		return null;
+		return "DeluxeTags";
 	}
 
 	@Override
 	public String getVersion() {
-		return "1.0.1";
+		return "1.0.2";
 	}
 
 	@Override
@@ -45,6 +59,11 @@ public class ExampleExpansion extends PlaceholderExpansion {
 			return p.getDisplayName();
 		case "gamemode":
 			return p.getGameMode().name();
+		case "health":
+			return Double.toString(p.getHealth());
+		case "tag_menu_name":
+			String name = plugin.getGuiOptions().getMenuName();
+			return name != null ? name : "";
 		}
 		return null;
 	}
