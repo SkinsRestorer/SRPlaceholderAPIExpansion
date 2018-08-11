@@ -9,18 +9,12 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 
 public class ExampleExpansion extends PlaceholderExpansion {
 
+    private final String VERSION = getClass().getPackage().getImplementationVersion();
     private DeluxeTags deluxeTags;
 
     @Override
-    public boolean canRegister() {
-        if (!Bukkit.getPluginManager().isPluginEnabled(getRequiredPlugin())) { return false; }
-        deluxeTags = (DeluxeTags) Bukkit.getPluginManager().getPlugin(getRequiredPlugin());
-        return super.register() && deluxeTags != null;
-    }
-
-    @Override
-    public String getRequiredPlugin() {
-        return "DeluxeTags";
+    public String getIdentifier() {
+        return "example";
     }
 
     @Override
@@ -29,13 +23,20 @@ public class ExampleExpansion extends PlaceholderExpansion {
     }
 
     @Override
-    public String getIdentifier() {
-        return "example";
+    public String getVersion() {
+        return VERSION;
     }
 
     @Override
-    public String getVersion() {
-        return "1.0.3";
+    public String getRequiredPlugin() {
+        return "DeluxeTags";
+    }
+
+    @Override
+    public boolean canRegister() {
+        if (!Bukkit.getPluginManager().isPluginEnabled(getRequiredPlugin())) { return false; }
+        deluxeTags = (DeluxeTags) Bukkit.getPluginManager().getPlugin(getRequiredPlugin());
+        return super.register() && deluxeTags != null;
     }
 
     @Override
