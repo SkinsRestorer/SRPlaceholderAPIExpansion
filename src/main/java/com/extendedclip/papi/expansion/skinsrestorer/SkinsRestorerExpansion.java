@@ -1,69 +1,52 @@
-package com.extendedclip.expansions.example;
+package com.extendedclip.papi.expansion.skinsrestorer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+import skinsrestorer.bukkit.SkinsRestorer;
+import skinsrestorer.shared.exception.SkinRequestException;
 import me.clip.deluxetags.DeluxeTags;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 
-public class ExampleExpansion extends PlaceholderExpansion {
-    
-    private final String VERSION = getClass().getPackage().getImplementationVersion();
+public class SkinsRestorerExpansion extends PlaceholderExpansion {
     private DeluxeTags deluxeTags;
+    private SkinsRestorer skinsRestorer;
 
-    /**
-     * Defines the name of the expansion that is also used in the
-     * placeholder itself.
-     * 
-     * @return {@code example} as String
-     */
-    @Override
-    public String getIdentifier() {
-        return "example";
+    private final String VERSION = getClass().getPackage().getImplementationVersion();
+
+    public boolean canRegister() {
+        return (Bukkit.getPluginManager().getPlugin("SkinsRestorer") != null);
+        // might not be needed
+        /*if (!Bukkit.getPluginManager().isPluginEnabled(getRequiredPlugin())) { return false; }
+        deluxeTags = (DeluxeTags) Bukkit.getPluginManager().getPlugin(getRequiredPlugin());
+        return super.register() && deluxeTags != null; */
     }
 
-    /**
-     * The author of the expansion.
-     * 
-     * @return {@code everyone} as String
-     */
-    @Override
+    public boolean register() {
+        this.skinsRestorer = (SkinsRestorer)Bukkit.getPluginManager().getPlugin("SkinsRestorer");
+        if (this.skinsRestorer != null)
+            return super.register();
+        return false;
+    }
+
     public String getAuthor() {
-        return "everyone";
+        return "SRTeam";
     }
 
-    /**
-     * Returns the version of the expansion as String.
-     *
-     * @return The VERSION String
-     */
-    @Override
+    public String getIdentifier() {
+        return "SkinsRestorer";
+    }
+
     public String getVersion() {
         return VERSION;
     }
 
-    /**
-     * Returns the name of the required plugin.
-     *
-     * @return {@code DeluxeTags} as String
-     */
-    @Override
-    public String getRequiredPlugin() {
-        return "DeluxeTags";
-    }
+    //dunno what this is
+    /*public String getRequiredPlugin() {
+        return "SkinsRestorer";
+    }*/
 
-    /**
-     * Used to check if the expansion is able to register.
-     * 
-     * @return true or false depending on if the required plugin is installed
-     */
-    @Override
-    public boolean canRegister() {
-        if (!Bukkit.getPluginManager().isPluginEnabled(getRequiredPlugin())) { return false; }
-        deluxeTags = (DeluxeTags) Bukkit.getPluginManager().getPlugin(getRequiredPlugin());
-        return super.register() && deluxeTags != null;
-    }
 
     /**
      * This method is called when a placeholder is used and maches the set
