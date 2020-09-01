@@ -35,3 +35,4 @@ tmp/
 .project
 .recommenders
 local.properties
+/target/

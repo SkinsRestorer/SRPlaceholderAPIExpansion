@@ -3,12 +3,11 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.extendedclip.placeholderapi.expansions</groupId>
-    <artifactId>example-expansion</artifactId>
+    <groupId>com.extendedclip.placeholderapi.expansion.skinsrestorer</groupId>
+    <artifactId>skinsrestorer-expansion</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
 
-    <name>Expansion-Example</name>
+    <name>Expansion-SkinsRestorer</name>
     <description>This is an example expansion for PlaceholderAPI</description>
 
     <repositories>
