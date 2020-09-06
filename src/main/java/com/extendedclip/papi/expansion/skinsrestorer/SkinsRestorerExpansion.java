@@ -11,12 +11,8 @@ import skinsrestorer.bukkit.SkinsRestorerBukkitAPI;
 
 public class SkinsRestorerExpansion extends PlaceholderExpansion {
     private final String VERSION = getClass().getPackage().getImplementationVersion();
-    private DeluxeTags deluxeTags;
     private SkinsRestorer skinsRestorer;
     private SkinsRestorerBukkitAPI skinsRestorerBukkitAPI;
-
-    public SkinsRestorerExpansion() {
-    }
 
     @Override
     public boolean canRegister() {
@@ -82,7 +78,7 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
                         return "Url_skin";
                     return name;
                 } else {
-                    return p;
+                    return "None";
                 }
 
             default:
