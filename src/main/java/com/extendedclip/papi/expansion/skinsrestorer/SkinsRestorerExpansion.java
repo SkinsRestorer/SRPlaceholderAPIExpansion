@@ -18,10 +18,12 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
     public SkinsRestorerExpansion() {
     }
 
+    @Override
     public boolean canRegister() {
         return (Bukkit.getPluginManager().getPlugin("SkinsRestorer") != null);
     }
 
+    @Override
     public boolean register() {
         this.skinsRestorer = (SkinsRestorer) Bukkit.getPluginManager().getPlugin("SkinsRestorer");
         if (this.skinsRestorer != null)
@@ -29,19 +31,22 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
         return false;
     }
 
+    @Override
     public String getAuthor() {
         return "SRTeam";
     }
 
+    @Override
     public String getIdentifier() {
         return "SkinsRestorer";
     }
 
+    @Override
     public String getVersion() {
         return VERSION;
     }
 
-    //dunno what this is
+    @Override
     public String getRequiredPlugin() {
         return "SkinsRestorer";
     }
