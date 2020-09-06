@@ -1,6 +1,5 @@
 package com.extendedclip.papi.expansion.skinsrestorer;
 
-import me.clip.deluxetags.DeluxeTags;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
