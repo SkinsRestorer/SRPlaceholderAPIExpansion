@@ -3,8 +3,8 @@ package com.extendedclip.papi.expansion.skinsrestorer;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
 import skinsrestorer.bukkit.SkinsRestorer;
 import skinsrestorer.bukkit.SkinsRestorerBukkitAPI;
 
@@ -59,15 +59,15 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
         if (params.equals("test")) {
             return "success";
         }
-        if (offlinePlayer == null || !offlinePlayer.isOnline()) {
-            return "player is not online";
-        }
+
+        @Nullable String p = offlinePlayer.getName();
+
+        if (p == null)
+            return "Player cant be null";
 
         skinsRestorer = JavaPlugin.getPlugin(SkinsRestorer.class);
         skinsRestorerBukkitAPI = skinsRestorer.getSkinsRestorerBukkitAPI();
-        Player player = offlinePlayer.getPlayer();
 
-        String p = player.getName();
 
         switch (params) {
             case "getSkinName":
