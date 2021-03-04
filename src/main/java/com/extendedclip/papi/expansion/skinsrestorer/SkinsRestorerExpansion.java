@@ -1,17 +1,14 @@
 package com.extendedclip.papi.expansion.skinsrestorer;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+import net.skinsrestorer.api.SkinsRestorerAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.Nullable;
-import skinsrestorer.bukkit.SkinsRestorer;
-import skinsrestorer.bukkit.SkinsRestorerBukkitAPI;
+import org.jetbrains.annotations.NotNull;
 
 public class SkinsRestorerExpansion extends PlaceholderExpansion {
-    private final String VERSION = getClass().getPackage().getImplementationVersion();
-    private SkinsRestorer skinsRestorer;
-    private SkinsRestorerBukkitAPI skinsRestorerBukkitAPI;
+    private final String version = getClass().getPackage().getImplementationVersion();
+    private SkinsRestorerAPI skinsRestorerAPI;
 
     @Override
     public boolean canRegister() {
@@ -20,25 +17,26 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
 
     @Override
     public boolean register() {
-        this.skinsRestorer = (SkinsRestorer) Bukkit.getPluginManager().getPlugin("SkinsRestorer");
-        if (this.skinsRestorer != null)
+        if (Bukkit.getPluginManager().getPlugin("SkinsRestorer") != null) {
             return super.register();
-        return false;
+        } else {
+            return false;
+        }
     }
 
     @Override
-    public String getAuthor() {
+    public @NotNull String getAuthor() {
         return "SRTeam";
     }
 
     @Override
-    public String getIdentifier() {
+    public @NotNull String getIdentifier() {
         return "SkinsRestorer";
     }
 
     @Override
-    public String getVersion() {
-        return VERSION;
+    public @NotNull String getVersion() {
+        return version;
     }
 
     @Override
@@ -47,7 +45,7 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
     }
 
     /**
-     * This method is called when a placeholder is used and maches the set
+     * This method is called when a placeholder is used and matches the set
      * {@link #getIdentifier() identifier}
      *
      * @param offlinePlayer The player to parse placeholders for
@@ -60,29 +58,26 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
             return "success";
         }
 
-        @Nullable String p = offlinePlayer.getName();
+        String p = offlinePlayer.getName();
 
         if (p == null)
             return "Player cant be null";
 
-        skinsRestorer = JavaPlugin.getPlugin(SkinsRestorer.class);
-        skinsRestorerBukkitAPI = skinsRestorer.getSkinsRestorerBukkitAPI();
+        skinsRestorerAPI = SkinsRestorerAPI.getApi();
 
+        if (params.equals("getSkinName")) {
+            String name = skinsRestorerAPI.getSkinName(p);
 
-        switch (params) {
-            case "getSkinName":
-                String name = skinsRestorerBukkitAPI.getSkinName(p);
-                if (name != null) {
-                    if (name.contains(" "))
-                        return "Url_skin";
-                    return name;
-                } else {
-                    return "None";
-                }
+            if (name != null) {
+                if (name.contains(" "))
+                    return "Url_skin";
 
-            default:
-                return null;
+                return name;
+            } else {
+                return "None";
+            }
         }
+        return null;
     }
 
 }
