@@ -17,11 +17,18 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
 
     @Override
     public boolean register() {
-        if (Bukkit.getPluginManager().getPlugin("SkinsRestorer") != null) {
-            return super.register();
-        } else {
-            return false;
+        try {
+            if (Bukkit.getPluginManager().getPlugin("SkinsRestorer") != null) {
+                skinsRestorerAPI = SkinsRestorerAPI.getApi();
+                return super.register();
+            } else {
+                System.out.println("[SRPlaceholderAPIExpansion] " + version + "ERROR SkinsRestorer not installed!");
+                return false;
+            }
+        } catch (NoClassDefFoundError ignored) {
+            System.out.println("[SRPlaceholderAPIExpansion] " + version + "You are using unsupported version of SkinsRestorer. Use v14 or newer.");
         }
+        return false;
     }
 
     @Override
@@ -62,8 +69,6 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
 
         if (p == null)
             return "Player cant be null";
-
-        skinsRestorerAPI = SkinsRestorerAPI.getApi();
 
         if (params.equals("getSkinName")) {
             String name = skinsRestorerAPI.getSkinName(p);
