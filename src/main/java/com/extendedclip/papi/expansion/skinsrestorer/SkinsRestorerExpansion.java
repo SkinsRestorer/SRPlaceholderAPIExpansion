@@ -1,15 +1,11 @@
 package com.extendedclip.papi.expansion.skinsrestorer;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import net.skinsrestorer.api.SkinsRestorerAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
 public class SkinsRestorerExpansion extends PlaceholderExpansion {
-    private final String version = getClass().getPackage().getImplementationVersion();
-    private SkinsRestorerAPI skinsRestorerAPI;
-
     @Override
     public boolean canRegister() {
         return (Bukkit.getPluginManager().getPlugin("SkinsRestorer") != null);
@@ -17,18 +13,12 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
 
     @Override
     public boolean register() {
-        try {
-            if (Bukkit.getPluginManager().getPlugin("SkinsRestorer") != null) {
-                skinsRestorerAPI = SkinsRestorerAPI.getApi();
-                return super.register();
-            } else {
-                System.out.println("[SRPlaceholderAPIExpansion] " + version + "ERROR SkinsRestorer not installed!");
-                return false;
-            }
-        } catch (NoClassDefFoundError ignored) {
-            System.out.println("[SRPlaceholderAPIExpansion] " + version + "You are using unsupported version of SkinsRestorer. Use v14 or newer.");
+        if (Bukkit.getPluginManager().getPlugin("SkinsRestorer") != null) {
+            return super.register();
+        } else {
+            System.out.println("[SRPlaceholderAPIExpansion] ERROR SkinsRestorer not installed!");
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -43,7 +33,7 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getVersion() {
-        return version;
+        return getClass().getPackage().getImplementationVersion();
     }
 
     @Override
@@ -68,10 +58,10 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
         String p = offlinePlayer.getName();
 
         if (p == null)
-            return "Player cant be null";
+            return "Player can't be null";
 
         if (params.equals("getSkinName")) {
-            String name = skinsRestorerAPI.getSkinName(p);
+            String name = SRWrapper.getSkinName(p);
 
             if (name != null) {
                 if (name.contains(" "))
@@ -82,6 +72,7 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
                 return "None";
             }
         }
+
         return null;
     }
 
