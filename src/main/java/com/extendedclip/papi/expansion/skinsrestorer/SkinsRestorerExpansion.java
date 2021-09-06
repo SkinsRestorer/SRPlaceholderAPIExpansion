@@ -33,7 +33,7 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
 
     @Override
     public @NotNull String getVersion() {
-        return getClass().getPackage().getImplementationVersion();
+        return "${project.version}";
     }
 
     @Override
