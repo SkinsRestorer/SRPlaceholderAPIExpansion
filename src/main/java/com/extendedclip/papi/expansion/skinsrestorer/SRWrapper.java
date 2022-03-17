@@ -14,4 +14,12 @@ public class SRWrapper {
             return null;
         }
     }
+    public static String getSkinTextureUrl(String skinName) {
+        try {
+            return SkinsRestorerAPI.getApi().getSkinTextureUrl(skinName);
+        } catch (NoClassDefFoundError ignored) {
+            System.out.println("[SRPlaceholderAPIExpansion] You are using unsupported version of SkinsRestorer. Use v14.1.11 or newer!");
+            return null;
+        }
+    }
 }
