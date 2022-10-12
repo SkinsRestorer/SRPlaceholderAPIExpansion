@@ -1,25 +1,11 @@
 package com.extendedclip.papi.expansion.skinsrestorer;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
 public class SkinsRestorerExpansion extends PlaceholderExpansion {
-    @Override
-    public boolean canRegister() {
-        return (Bukkit.getPluginManager().getPlugin("SkinsRestorer") != null);
-    }
-
-    @Override
-    public boolean register() {
-        if (Bukkit.getPluginManager().getPlugin("SkinsRestorer") != null) {
-            return super.register();
-        } else {
-            System.out.println("[SRPlaceholderAPIExpansion] ERROR SkinsRestorer not installed!");
-            return false;
-        }
-    }
+    private SRWrapper wrapper;
 
     @Override
     public @NotNull String getAuthor() {
@@ -39,6 +25,12 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
     @Override
     public String getRequiredPlugin() {
         return "SkinsRestorer";
+    }
+
+    @Override
+    public boolean register() {
+        wrapper = new SRWrapper(this);
+        return super.register();
     }
 
     /**
@@ -61,7 +53,7 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
 
         // %getSkinName%
         if (params.equals("getSkinName")) {
-            String name = SRWrapper.getSkinName(p);
+            String name = wrapper.getSkinName(p);
 
             if (name != null) {
                 if (name.contains(" "))
@@ -75,7 +67,7 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
 
         // %getTextureUrl_Or_PlayerName%
         if (params.equals("getTextureUrl_Or_PlayerName")) {
-            String url = SRWrapper.getSkinTextureUrl(SRWrapper.getSkinName(p));
+            String url = wrapper.getSkinTextureUrl(wrapper.getSkinName(p));
 
             if (url == null || url.equals("null"))
                 url = p;
@@ -85,7 +77,7 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
 
         // %getTextureUrl_Or_Empty%
         if (params.equals("getTextureUrl_Or_Empty")) {
-            String url = SRWrapper.getSkinTextureUrl(SRWrapper.getSkinName(p));
+            String url = wrapper.getSkinTextureUrl(wrapper.getSkinName(p));
 
             if (url == null || url.equals("null"))
                 url = "";
@@ -95,12 +87,12 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
 
         // %getTextureUrl_Or_Null%
         if (params.equals("getTextureUrl_Or_Null")) {
-            return SRWrapper.getSkinTextureUrl(SRWrapper.getSkinName(p));
+            return wrapper.getSkinTextureUrl(wrapper.getSkinName(p));
         }
 
         // %getTextureUrl_Or_Steve%
         if (params.equals("getTextureUrl_Or_Steve")) {
-            String url = SRWrapper.getSkinTextureUrl(SRWrapper.getSkinName(p));
+            String url = wrapper.getSkinTextureUrl(wrapper.getSkinName(p));
 
             if (url == null || url.equals("null"))
                 url = "http://textures.minecraft.net/texture/6d3b06c38504ffc0229b9492147c69fcf59fd2ed7885f78502152f77b4d50de1";
@@ -110,7 +102,7 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
 
         // %getTextureUrl_Or_Alex%
         if (params.equals("getTextureUrl_Or_Alex")) {
-            String url = SRWrapper.getSkinTextureUrl(SRWrapper.getSkinName(p));
+            String url = wrapper.getSkinTextureUrl(wrapper.getSkinName(p));
 
             if (url == null || url.equals("null"))
                 url = "http://textures.minecraft.net/texture/fb9ab3483f8106ecc9e76bd47c71312b0f16a58784d606864f3b3e9cb1fd7b6c";
@@ -120,5 +112,4 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
 
         return null;
     }
-
 }

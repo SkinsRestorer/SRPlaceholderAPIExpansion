@@ -1,24 +1,26 @@
 package com.extendedclip.papi.expansion.skinsrestorer;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import net.skinsrestorer.api.SkinsRestorerAPI;
 
+@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class SRWrapper {
-    private SRWrapper() {
-    }
+    private final SkinsRestorerExpansion expansion;
 
-    public static String getSkinName(String name) {
+    public String getSkinName(String name) {
         try {
             return SkinsRestorerAPI.getApi().getSkinName(name);
-        } catch (NoClassDefFoundError ignored) {
-            System.out.println("[SRPlaceholderAPIExpansion] You are using unsupported version of SkinsRestorer. Use v14.1.0 or newer!");
+        } catch (Error e) {
+            expansion.severe("You are using unsupported version of SkinsRestorer. Use v14.1.0 or newer!", e);
             return null;
         }
     }
-    public static String getSkinTextureUrl(String skinName) {
+    public String getSkinTextureUrl(String skinName) {
         try {
             return SkinsRestorerAPI.getApi().getSkinTextureUrl(skinName);
-        } catch (NoClassDefFoundError ignored) {
-            System.out.println("[SRPlaceholderAPIExpansion] You are using unsupported version of SkinsRestorer. Use v14.1.11 or newer!");
+        } catch (Error e) {
+            expansion.severe("You are using unsupported version of SkinsRestorer. Use v14.1.11 or newer!", e);
             return null;
         }
     }
