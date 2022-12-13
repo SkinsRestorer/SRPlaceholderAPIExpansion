@@ -3,6 +3,7 @@ package com.extendedclip.papi.expansion.skinsrestorer;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class SkinsRestorerExpansion extends PlaceholderExpansion {
     private SRWrapper wrapper;
@@ -42,8 +43,9 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
      * @return Possible-null String
      */
     @Override
-    public String onRequest(OfflinePlayer offlinePlayer, String params) {
-        if (params.equals("test")) {
+    public @Nullable String onRequest(OfflinePlayer offlinePlayer, @NotNull String params) {
+        params = params.toLowerCase();
+        if (params.equalsIgnoreCase("test")) {
             return "success";
         }
 
@@ -52,7 +54,7 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
             return "Player can't be null";
 
         // %getSkinName%
-        if (params.equals("getSkinName")) {
+        if (params.equalsIgnoreCase("getSkinName")) {
             String name = wrapper.getSkinName(p);
 
             if (name != null) {
@@ -65,49 +67,48 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
             }
         }
 
-        // %getTextureUrl_Or_PlayerName%
-        if (params.equals("getTextureUrl_Or_PlayerName")) {
-            String url = wrapper.getSkinTextureUrl(wrapper.getSkinName(p));
+        if (params.toLowerCase().startsWith("gettextureurl_"))
+            return getSkinTextureUrl(p, params.toLowerCase().replace("gettextureurl_", ""));
 
-            if (url == null || url.equals("null"))
-                url = p;
+        // getSkinTextureID
+        if (params.toLowerCase().startsWith("gettextureid_"))
+            return getSkinTextureUrl(p, params.toLowerCase().replace("gettextureid_", ""))
+                .replace("https://textures.minecraft.net/texture/", "")
+                .replace("http://textures.minecraft.net/texture/", "");
 
+        return null;
+    }
+    public String getSkinTextureUrl(String p, String params) {
+        String url = wrapper.getSkinTextureUrl(wrapper.getSkinName(p));
+
+        //noinspection ConstantConditions
+        if (url != null || ("null").equals(url)) {
             return url;
+        }
+
+        // %getTextureUrl_Or_PlayerName%
+        if (params.equalsIgnoreCase("Or_PlayerName")) {
+            return p;
         }
 
         // %getTextureUrl_Or_Empty%
-        if (params.equals("getTextureUrl_Or_Empty")) {
-            String url = wrapper.getSkinTextureUrl(wrapper.getSkinName(p));
-
-            if (url == null || url.equals("null"))
-                url = "";
-
-            return url;
+        if (params.equalsIgnoreCase("Or_Empty")) {
+            return "";
         }
 
         // %getTextureUrl_Or_Null%
-        if (params.equals("getTextureUrl_Or_Null")) {
-            return wrapper.getSkinTextureUrl(wrapper.getSkinName(p));
+        if (params.equalsIgnoreCase("Or_Null")) {
+            return null;
         }
 
         // %getTextureUrl_Or_Steve%
-        if (params.equals("getTextureUrl_Or_Steve")) {
-            String url = wrapper.getSkinTextureUrl(wrapper.getSkinName(p));
-
-            if (url == null || url.equals("null"))
-                url = "http://textures.minecraft.net/texture/6d3b06c38504ffc0229b9492147c69fcf59fd2ed7885f78502152f77b4d50de1";
-
-            return url;
+        if (params.equalsIgnoreCase("Or_Steve")) {
+            return "http://textures.minecraft.net/texture/6d3b06c38504ffc0229b9492147c69fcf59fd2ed7885f78502152f77b4d50de1";
         }
 
         // %getTextureUrl_Or_Alex%
-        if (params.equals("getTextureUrl_Or_Alex")) {
-            String url = wrapper.getSkinTextureUrl(wrapper.getSkinName(p));
-
-            if (url == null || url.equals("null"))
-                url = "http://textures.minecraft.net/texture/fb9ab3483f8106ecc9e76bd47c71312b0f16a58784d606864f3b3e9cb1fd7b6c";
-
-            return url;
+        if (params.endsWith("Or_Alex")) {
+            return "http://textures.minecraft.net/texture/fb9ab3483f8106ecc9e76bd47c71312b0f16a58784d606864f3b3e9cb1fd7b6c";
         }
 
         return null;
