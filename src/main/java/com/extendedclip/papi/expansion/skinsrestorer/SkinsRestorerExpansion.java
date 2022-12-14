@@ -82,34 +82,28 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
         String url = wrapper.getSkinTextureUrl(wrapper.getSkinName(p));
 
         //noinspection ConstantConditions
-        if (url != null || ("null").equals(url)) {
+        if (url != null || ("null").equals(url))
             return url;
-        }
 
         // %getTextureUrl_Or_PlayerName%
-        if (params.equalsIgnoreCase("Or_PlayerName")) {
+        if (params.equalsIgnoreCase("Or_PlayerName"))
             return p;
-        }
 
         // %getTextureUrl_Or_Empty%
-        if (params.equalsIgnoreCase("Or_Empty")) {
+        if (params.equalsIgnoreCase("Or_Empty"))
             return "";
-        }
 
         // %getTextureUrl_Or_Null%
-        if (params.equalsIgnoreCase("Or_Null")) {
+        if (params.equalsIgnoreCase("Or_Null"))
             return null;
-        }
 
         // %getTextureUrl_Or_Steve%
-        if (params.equalsIgnoreCase("Or_Steve")) {
+        if (params.equalsIgnoreCase("Or_Steve"))
             return "http://textures.minecraft.net/texture/6d3b06c38504ffc0229b9492147c69fcf59fd2ed7885f78502152f77b4d50de1";
-        }
 
         // %getTextureUrl_Or_Alex%
-        if (params.endsWith("Or_Alex")) {
+        if (params.equalsIgnoreCase("Or_Alex"))
             return "http://textures.minecraft.net/texture/fb9ab3483f8106ecc9e76bd47c71312b0f16a58784d606864f3b3e9cb1fd7b6c";
-        }
 
         return null;
     }
