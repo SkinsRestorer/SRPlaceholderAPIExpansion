@@ -43,7 +43,7 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
      * @return Possible-null String
      */
     @Override
-    public @Nullable String onRequest(OfflinePlayer offlinePlayer, @NotNull String params) {
+    public @Nullable String onRequest(@NotNull OfflinePlayer offlinePlayer, @NotNull String params) {
         params = params.toLowerCase();
         if (params.equalsIgnoreCase("test")) {
             return "success";
@@ -71,18 +71,22 @@ public class SkinsRestorerExpansion extends PlaceholderExpansion {
             return getSkinTextureUrl(p, params.toLowerCase().replace("gettextureurl_", ""));
 
         // getSkinTextureID
-        if (params.toLowerCase().startsWith("gettextureid_"))
-            return getSkinTextureUrl(p, params.toLowerCase().replace("gettextureid_", ""))
-                .replace("https://textures.minecraft.net/texture/", "")
-                .replace("http://textures.minecraft.net/texture/", "");
+        if (params.toLowerCase().startsWith("gettextureid_")) {
+            String skinTexture = getSkinTextureUrl(p, params.toLowerCase().replace("gettextureid_", ""));
+            if (skinTexture != null) {
+                skinTexture = skinTexture.replace("https://textures.minecraft.net/texture/", "").replace("http://textures.minecraft.net/texture/", "");
+                return skinTexture;
+            }
 
+        }
         return null;
     }
+
     public String getSkinTextureUrl(String p, String params) {
         String url = wrapper.getSkinTextureUrl(wrapper.getSkinName(p));
 
         //noinspection ConstantConditions
-        if (url != null || ("null").equals(url))
+        if (!(url == null || url.trim().isEmpty()))
             return url;
 
         // %getTextureUrl_Or_PlayerName%
