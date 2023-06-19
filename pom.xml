@@ -44,7 +44,7 @@
         <dependency>
             <groupId>net.skinsrestorer</groupId>
             <artifactId>skinsrestorer-api</artifactId>
-            <version>14.2.8</version>
+            <version>14.2.12</version>
             <scope>provided</scope>
         </dependency>
         <!-- Lombok -->
