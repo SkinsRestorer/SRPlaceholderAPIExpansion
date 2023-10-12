@@ -1,3 +1,7 @@
+Starting v15, the PlaceholderAPI expansion is part of the main plugin.
+
+---
+
 # SRPlaceholderAPIExpansion
 PlaceholderAPI expansion for SkinsRestorer placeholders
 
